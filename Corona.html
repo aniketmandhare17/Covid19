@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#country').click(function () {
+
+
+                var url = "http://restcountries.eu/rest/v2/all";
+
+                $.getJSON(url, function (data) {
+                    $.each(data, function (index, value) {
+                       
+                        $('#select').append('<option value="' + value.name + '">' + value.name + '</option>');
+                    });
+                });
+            });
+
+         
+            $('#select').change(function () {
+                $('#msg').text('Selected Item: ' + this.options[this.selectedIndex].text);
+            });
+
+
+
+
+            $('#search').click(function () {
+                debugger;
+
+                var url = "https://api.covid19api.com/summary";
+
+                $.getJSON(url, function (data) {
+                    debugger;
+
+
+                    var obj = data.Countries.find(x => x.Country.toLowerCase() === $('#select').val().toLowerCase());
+
+
+                    $("#totalconfirmed").val(obj.TotalConfirmed);
+
+                    $("#newconfirmed").val(obj.NewConfirmed);
+
+                    $("#newrecover").val(obj.NewRecovered);
+
+                    $("#newdeath").val(obj.NewDeaths);
+
+
+                })
+            })
+        });
+    </script>
+
+
+
+</head>
+<body>
+
+    <div class="container-fluid border border-dark">
+
+        <div class="row m-2">
+            <div class="col-sm-12 border font-weight-bold col align-self-center bg-secondary text-white">
+                <h5>Covid Dashboard</h5>
+            </div>
+        </div>
+
+        <div class="row m-1 p-1 border border-dark">
+            <div class="col-sm-4font-weight-bold ">
+                <p>
+                    <input type="button" value="Select Country:" id="country" />
+                </p>
+
+                <select id="select">
+                    <option value="">-- Select --</option>
+                </select>
+
+                <p id="msg"></p>
+
+
+            </div>
+
+            <div class="col-sm-4  font-weight-bold ">
+
+
+            </div>
+
+
+
+            <div class="col-sm-4  font-weight-bold ">
+                <button type="button" class="btn btn-warning" id="search" name="search">Search</button>
+            </div>
+
+        </div>
+
+
+        <center><h2>Covid Update</h2></center>
+
+        <div class="row m-2">
+            <div class="col-sm-12  font-weight-bold col align-self-center">
+                <div class="row m-5">
+                    <div class="col-sm-6 ">
+                        <label for="email">Total Confirmed:</label>
+                    </div>
+                    <div class="col-sm-6 ">
+                        <input type="email" class="form-control" id="totalconfirmed" name="totalconfirmed">
+                    </div>
+                </div>
+
+                <div class="row m-5">
+                    <div class="col-sm-6">
+                        <label for="email">New Confirmed:</label>
+                    </div>
+                    <div class="col-sm-6 ">
+                        <input type="email" class="form-control" id="newconfirmed" name="newconfirmed">
+                    </div>
+                </div>
+
+                <div class="row m-5">
+                    <div class="col-sm-6">
+                        <label for="email">New Recovered:</label>
+                    </div>
+                    <div class="col-sm-6 ">
+                        <input type="email" class="form-control" id="newrecover" name="newrecover">
+                    </div>
+                </div>
+
+                <div class="row m-5">
+                    <div class="col-sm-6">
+                        <label for="email">New Death:</label>
+                    </div>
+                    <div class="col-sm-6 ">
+                        <input type="email" class="form-control" id="newdeath" name="newdeath">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+
+</html>
